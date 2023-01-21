@@ -1,21 +1,36 @@
+/* eslint-disable no-restricted-syntax */
 /* eslint-disable no-console */
+import fs from 'fs';
+import path from 'path';
 
-// Function compare 2 objects
-const genDiff = (objectOne, objectTwo) => {
-  const arrayKeys = [...new Set([...(Object.keys(objectOne)), ...(Object.keys(objectTwo))])].sort();
+const genDiff = (filepath1, filepath2) => {
+  const object1 = JSON.parse(fs.readFileSync(path.resolve(filepath1)));
+  const object2 = JSON.parse(fs.readFileSync(path.resolve(filepath2)));
+
+  /*  const obj3 = compare(obj1, obj2);
+  const str = stringifyAndSort(obj3); stringifyAndSort - делает из объекта строку в заданном формате.
+  console.log(str);   
+  */ 
+
+  const arrayOne = Object.keys(object1);
+  const arrayTwo = Object.keys(object2);
 
   console.log('{');
-  const result = arrayKeys.map((key) => {
-    if (objectOne.hasOwnProperty(key) && !objectTwo.hasOwnProperty(key)) return `  - ${key}: ${objectOne[key]}`;
-    if (!objectOne.hasOwnProperty(key) && objectTwo.hasOwnProperty(key)) return `  + ${key}: ${objectTwo[key]}`;
-    if (objectOne.hasOwnProperty(key) && objectTwo.hasOwnProperty(key)) {
-      if (objectOne[key] === objectTwo[key]) return `    ${key}: ${objectOne[key]}`;
-      return `  - ${key}: ${objectOne[key]}\n   + ${key}: ${objectTwo[key]}`;
-    }
-  });
-  console.log(result);
+  const unionKeys = [...new Set([...arrayOne, ...arrayTwo])]
+    .sort()
+    .map((key) => {
+      if (arrayOne.includes(key) && !arrayTwo.includes(key)) return console.log(`  - ${key}: ${object1[key]}`);
+
+      if (!arrayOne.includes(key) && arrayTwo.includes(key)) return console.log(`  - ${key}: ${object2[key]}`);
+
+      if (arrayOne.includes(key) && arrayTwo.includes(key)) {
+        if (object1[key] === object2[key]) return console.log(`    ${key}: ${object1[key]}`); 
+        console.log(`  - ${key}: ${object1[key]}`);
+        console.log(`  + ${key}: ${object2[key]}`);
+        return;
+      }
+    });
   console.log('}');
-  return result;
 };
   
 /*arrayOne.map((keyOne) => {
