@@ -5,7 +5,12 @@ import fs from 'fs';
 import path from 'path';
 
 const compareObjects = (object1, object2) => {
-  const setOfKeys = [...new Set([...Object.keys(object1), ...Object.keys(object2)])].sort();
+  const keys1 = Object.keys(object1);
+  const keys2 = Object.keys(object2);
+
+  const setOfKeys = [...new Set([...keys1, ...keys2])];
+  setOfKeys.sort();
+
   const result = setOfKeys.map((key) => {
     const object1HasKey = object1.hasOwnProperty(key);
     const object2HasKey = object2.hasOwnProperty(key);
