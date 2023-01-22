@@ -50,7 +50,7 @@ const genDiff = (filepath1, filepath2) => {
 
   const setOfKeys = compareObjects(object1, object2);
   const result = createString(setOfKeys);
-  // const str = stringifyAndSort(obj3); stringifyAndSort - делает из объекта строку в заданном формате.
+  return result;
 };
 
 export default genDiff;
