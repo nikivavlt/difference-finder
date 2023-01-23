@@ -16,10 +16,6 @@ const compareObjects = (object1, object2) => {
       const object1HasKey = object1.hasOwnProperty(key);
       const object2HasKey = object2.hasOwnProperty(key);
 
-      if (object1HasKey && !object2HasKey) return { name: key, value: object1[key], type: 'deleted' };
-
-      if (!object1HasKey && object2HasKey) return { name: key, value: object2[key], type: 'added' };
-
       if (object1HasKey && object2HasKey) {
         if (object1[key] === object2[key]) return { name: key, value: object1[key], type: 'unchanged' };
 
@@ -27,13 +23,18 @@ const compareObjects = (object1, object2) => {
           name: key, oldValue: object1[key], newValue: object2[key], type: 'changed',
         };
       }
+
+      if (!object1HasKey && object2HasKey) return { name: key, value: object2[key], type: 'added' };
+
+      return { name: key, value: object1[key], type: 'deleted' };
     });
 };
 
 const createString = (keysData) => {
   const openSymbol = '{';
   const closeSymbol = '}';
-  const test = [openSymbol, ...keysData.map((key) => {
+
+  const keysString = keysData.map((key) => {
     if (key.type === 'unchanged') return `    ${key.name}: ${key.value}`;
 
     if (key.type === 'changed') {
@@ -42,9 +43,11 @@ const createString = (keysData) => {
 
     if (key.type === 'added') return `  + ${key.name}: ${key.value}`;
 
-    if (key.type === 'deleted') return `  - ${key.name}: ${key.value}`;
-  }), closeSymbol];
-  return test.join('\n');
+    return `  - ${key.name}: ${key.value}`;
+  });
+
+  const newString = [openSymbol, ...keysString, closeSymbol].join('\n');
+  return newString;
 };
 
 const genDiff = (filepath1, filepath2) => {
