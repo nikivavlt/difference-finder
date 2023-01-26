@@ -50,9 +50,13 @@ const createString = (keysData) => {
   return newString;
 };
 
-const genDiff = (filepath1, filepath2) => {
+const getFormat = (filePath) => console.log(path.extname(filePath).slice(1));
+
+const genDiff = (filepath1, filepath2, format) => {
   const object1 = JSON.parse(fs.readFileSync(path.resolve(filepath1)));
   const object2 = JSON.parse(fs.readFileSync(path.resolve(filepath2)));
+
+  getFormat(filepath1);
 
   const keysData = compareObjects(object1, object2);
   const result = createString(keysData);
