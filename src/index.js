@@ -2,9 +2,9 @@
 /* eslint-disable no-prototype-builtins */
 /* eslint-disable no-restricted-syntax */
 /* eslint-disable no-console */
-import fs from 'fs';
 import _ from 'lodash';
-import path from 'path';
+import { getFormat, readFile } from './tools.js';
+import parse from './parsers.js';
 
 const compareObjects = (object1, object2) => {
   const keys1 = Object.keys(object1);
@@ -50,13 +50,12 @@ const createString = (keysData) => {
   return newString;
 };
 
-const getFormat = (filePath) => console.log(path.extname(filePath).slice(1));
-
 const genDiff = (filepath1, filepath2, format) => {
-  const object1 = JSON.parse(fs.readFileSync(path.resolve(filepath1)));
-  const object2 = JSON.parse(fs.readFileSync(path.resolve(filepath2)));
+  const file1 = readFile(filepath1);
+  const file2 = readFile(filepath2);
 
-  getFormat(filepath1);
+  const object1 = parse(file1, getFormat(filepath1));
+  const object2 = parse(file2, getFormat(filepath2));
 
   const keysData = compareObjects(object1, object2);
   const result = createString(keysData);

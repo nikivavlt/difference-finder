@@ -1,13 +1,7 @@
-const parse = (content, format) => {
-  switch (format) {
-    case 'json':
-      break;
-    case 'yaml':
-      break;
-    case 'yml'
-    default:
-      break;
-  }
+const formats = {
+  json: JSON.parse,
+  yaml: JSON.parse,
+  yml: JSON.parse,
 };
 
-export default parse;
+export default (data, format) => formats[format](data);
