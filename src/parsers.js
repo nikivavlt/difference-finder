@@ -1,8 +1,10 @@
 import yaml from 'js-yaml';
 
-const formats = {
+const fileExtension = {
   json: JSON.parse,
   yml: yaml.safeLoad,
 };
 
-export default (data, format) => formats[format](data);
+const parse = (data, extension) => fileExtension[extension](data);
+
+export default parse;
