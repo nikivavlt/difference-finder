@@ -58,8 +58,8 @@ const genDiff = (filepath1, filepath2, format) => {
   const object2 = parse(file2, getFormat(filepath2));
 
   const keysData = compareObjects(object1, object2);
-  const result = createString(keysData);
-  return result;
+
+  return createString(keysData);
 };
 
 export default genDiff;
