@@ -3,7 +3,6 @@ import { Command } from 'commander/esm.mjs';
 import genDiff from '../src/index.js';
 
 const program = new Command();
-const options = program.opts();
 
 program.name('gendiff')
   .version('0.0.1', '-V, --version', 'output the version number')
@@ -11,7 +10,7 @@ program.name('gendiff')
   .option('-f, --format <type>', 'output format', 'stylish')
   .arguments('<filepath1> <filepath2>')
   .action((filepath1, filepath2) => {
-    console.log(genDiff(filepath1, filepath2, options.format));
+    console.log(genDiff(filepath1, filepath2, program.format));
   });
 
 program.parse();
