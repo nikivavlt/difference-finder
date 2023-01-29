@@ -11,4 +11,4 @@ Difference finder - package compares two configuration files and shows a differe
 <a href="https://codeclimate.com/github/nikivavlt/frontend-project-46/maintainability"><img src="https://api.codeclimate.com/v1/badges/92692aede1665fc3ccf2/maintainability" /></a>
 <a href="https://codeclimate.com/github/nikivavlt/frontend-project-lvl1/test_coverage"><img src="https://api.codeclimate.com/v1/badges/92692aede1665fc3ccf2/test_coverage" /></a>
 ### GitHub Actions:
-![GitHub Actions](https://github.com/nikivavlt/frontend-project-46/actions/workflows/github-actions-demo.yml/badge.svg)
+![GitHub Actions](https://github.com/nikivavlt/frontend-project-46/actions/workflows/main.yml/badge.svg)
