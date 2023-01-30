@@ -1,7 +1,9 @@
-import { readFile, getExtension, compareObjects, createString } from './tools.js';
-import parse from './parsers.js';
+import {
+  readFile, getExtension, compareObjects, createString,
+} from './tools';
+import parse from './parsers';
 
-const genDiff = (filepath1, filepath2, format) => {
+const genDiff = (filepath1, filepath2) => {
   const file1 = readFile(filepath1);
   const file2 = readFile(filepath2);
 

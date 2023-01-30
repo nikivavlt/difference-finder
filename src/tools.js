@@ -12,7 +12,6 @@ export const compareObjects = (object1, object2) => {
   const result = _.union(Object.keys(object1), Object.keys(object2))
     .sort()
     .map((key) => {
-
       if (isContainsKey(object1, key) && isContainsKey(object2, key)) {
         if (object1[key] === object2[key]) return { name: key, value: object1[key], type: 'unchanged' };
 
