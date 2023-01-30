@@ -1,5 +1,5 @@
 ### Description:
-Difference finder - package compares two configuration files and shows a difference.
+Difference finder - package compares two configuration files (json, yml, ini extensions) and shows a difference.
 
 ### Usage example:
 [![asciicast](https://asciinema.org/a/qaFxqdAN2QM386mkZ8k01lhGT.svg)](https://asciinema.org/a/qaFxqdAN2QM386mkZ8k01lhGT)
