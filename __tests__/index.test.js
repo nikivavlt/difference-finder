@@ -15,3 +15,7 @@ test('genDiff - compare JSON files', () => {
 test('genDiff - compare YML files', () => {
   expect(genDiff(getFixturePath('file1.yml'), getFixturePath('file2.yml'))).toEqual(readFile(getFixturePath('expected_file1.txt')));
 });
+
+test('genDiff - compare Nested files', () => {
+  expect(genDiff(getFixturePath('file3.json'), getFixturePath('file4.json'))).toEqual(readFile(getFixturePath('expected_file2.txt')));
+});

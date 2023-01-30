@@ -1,9 +1,8 @@
 #!/usr/bin/env node
+/* eslint-disable import/extensions */
 /* eslint-disable no-console */
-import { Command } from 'commander/esm';
-import genDiff from '../src/index';
-
-const program = new Command();
+import { program } from 'commander';
+import genDiff from '../src/index.js';
 
 program.name('gendiff')
   .version('0.0.1', '-V, --version', 'output the version number')
