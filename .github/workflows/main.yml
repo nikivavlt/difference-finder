@@ -14,25 +14,22 @@ jobs:
     
     strategy:
       matrix:
-        node-version: [14.x]
+        node-version: [18.x]
     
     steps:
     - uses: actions/checkout@v2
     
     - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v2
+      uses: actions/setup-node@v3
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
     
     - name: npm install, build
       run: make install
-
-    # - name: ESLint check
-    #  run: make lint
       
     - name: Automation test
-      run: make tests
+      run: make test-coverage
       
     - name: Test & publish code coverage
       uses: paambaati/codeclimate-action@v3.0.0
@@ -41,4 +38,7 @@ jobs:
       with:
         coverageCommand: make test-coverage
         debug: true
+        
+    - name: ESLint check
+      run: make lint
     
