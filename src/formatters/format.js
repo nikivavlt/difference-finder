@@ -1,8 +1,8 @@
 /* eslint-disable import/extensions */
-import createString from './stylish.js';
+import stringify from './stylish.js';
 
 const fileFormats = {
-  stylish: createString,
+  stylish: stringify,
 };
 
 export default (data, format) => fileFormats[format](data);
