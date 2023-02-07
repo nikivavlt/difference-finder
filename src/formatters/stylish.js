@@ -1,60 +1,55 @@
-/*const stringify = (data, replacer = ' ', spacesCount = 1) => {
-  const makeString = (currentData, depth) => {
-    const openBracket = '{';
-    const closeBracket = '}';
+const openBracket = '{';
+const closeBracket = '}';
+const spacer = ' ';
 
-    if (isNotObject(currentData)) return `${currentData}`;
+const isNotObject = (data) => (typeof data !== 'object' || data === null);
 
-    const spaceSize = spacesCount * depth;
-    const space = replacer.repeat(spaceSize);
-    const bracketSpace = replacer.repeat(spaceSize - spacesCount);
-    const string = Object
-      .entries(currentData)
-      .map(([key, value]) => `${space}${key}: ${makeString(value, depth + 1)}`);
+const createString = (value, depth) => {
+  if (isNotObject(value)) return value;
 
-    return [
-      openBracket,
-      ...string,
-      `${bracketSpace}${closeBracket}`,
-    ].join('\n');
-  };
+  const string = Object
+    .entries(value)
+    .map(([key, val]) => `${spacer.repeat(depth)}${key}: ${createString(val, depth + 4)}`);
 
-  return makeString(data, 1);
-};*/
-
-const isObject = (data) => (typeof data === 'object' && data !== null);
+  return [
+    openBracket,
+    ...string,
+    `${spacer.repeat(depth - 4)}${closeBracket}`,
+  ].join('\n');
+};
 
 const stringify = (data) => {
-  const makeString = (currentData, depth) => {
-    const space = ' '.repeat(depth);
-    const bracketSpace = ' '.repeat(depth + 1);
-    const openBracket = '{';
-    const closeBracket = '}';
+  const makeString = (currentData, depth) => currentData.flatMap((element) => {
+    const {
+      name,
+      value,
+      type,
+      oldValue,
+      newValue,
+    } = element;
 
-    const string = currentData.map((key) => {
-      if (key.type === 'unchanged') return `${space}  ${key.name}: ${key.value}`;
+    switch (type) {
+      case 'added':
+      case 'deleted':
+      case 'unchanged':
+        return `${spacer.repeat(depth)}${name}: ${createString(value, depth + 4)}`;
+      case 'changed':
+        return [
+          `${spacer.repeat(depth)}${name}: ${createString(oldValue, depth + 4)}`,
+          `${spacer.repeat(depth)}${name}: ${createString(newValue, depth + 4)}`,
+        ];
+      case 'nested':
+        return [
+          `${spacer.repeat(depth)}${name}: ${openBracket}`,
+          ...makeString(value, depth + 4),
+          `${spacer.repeat(depth)}${closeBracket}`,
+        ];
+      default:
+        break;
+    }
+  });
 
-      if (key.type === 'changed') {
-        return `${space}- ${key.name}: ${key.oldValue}\n${space}+ ${key.name}: ${key.newValue}`;
-      }
-
-      if (isObject(key.value)) {
-        return `${space}  ${key.name}: ${makeString(key.value, depth + 1)}`;
-      }
-
-      if (key.type === 'added') return `${space}+ ${key.name}: ${key.value}`;
-
-      return `${space}- ${key.name}: ${key.value}`;
-    });
-
-    return [
-      openBracket,
-      ...string,
-      `${bracketSpace}${closeBracket}`,
-    ].join('\n');
-  };
-
-  return makeString(data, 1);
+  return [openBracket, ...makeString(data, 4), closeBracket].join('\n');
 };
 
 export default stringify;
