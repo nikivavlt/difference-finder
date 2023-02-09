@@ -9,12 +9,12 @@ const createString = (value, depth) => {
 
   const string = Object
     .entries(value)
-    .map(([key, val]) => `${spacer.repeat(depth)}${key}: ${createString(val, depth + 4)}`);
+    .map(([key, val]) => `${spacer.repeat(depth + 2)}  ${key}: ${createString(val, depth + 4)}`);
 
   return [
     openBracket,
     ...string,
-    `${spacer.repeat(depth - 4)}${closeBracket}`,
+    `${spacer.repeat(depth)}${closeBracket}`,
   ].join('\n');
 };
 
@@ -28,28 +28,34 @@ const stringify = (data) => {
       newValue,
     } = element;
 
+    const typeSymbol = {
+      added: '+',
+      deleted: '-',
+      unchanged: ' ',
+    };
+
     switch (type) {
       case 'added':
       case 'deleted':
       case 'unchanged':
-        return `${spacer.repeat(depth)}${name}: ${createString(value, depth + 4)}`;
+        return `${spacer.repeat(depth)}${typeSymbol[type]} ${name}: ${createString(value, depth + 2)}`;
       case 'changed':
         return [
-          `${spacer.repeat(depth)}${name}: ${createString(oldValue, depth + 4)}`,
-          `${spacer.repeat(depth)}${name}: ${createString(newValue, depth + 4)}`,
+          `${spacer.repeat(depth)}${typeSymbol.deleted} ${name}: ${createString(oldValue, depth + 2)}`,
+          `${spacer.repeat(depth)}${typeSymbol.added} ${name}: ${createString(newValue, depth + 2)}`,
         ];
       case 'nested':
         return [
-          `${spacer.repeat(depth)}${name}: ${openBracket}`,
+          `${spacer.repeat(depth)}  ${name}: ${openBracket}`,
           ...makeString(value, depth + 4),
-          `${spacer.repeat(depth)}${closeBracket}`,
+          `${spacer.repeat(depth + 2)}${closeBracket}`,
         ];
       default:
         break;
     }
   });
 
-  return [openBracket, ...makeString(data, 4), closeBracket].join('\n');
+  return [openBracket, ...makeString(data, 2), closeBracket].join('\n');
 };
 
 export default stringify;

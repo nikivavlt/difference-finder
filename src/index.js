@@ -4,7 +4,7 @@ import parse from './parsers.js';
 import compareObjects from './compare.js';
 import formatData from './formatters/format.js';
 
-const genDiff = (filepath1, filepath2, format = 'stylish') => {
+const genDiff = (filepath1, filepath2, formatName = 'stylish') => {
   const file1 = readFile(filepath1);
   const file2 = readFile(filepath2);
 
@@ -13,7 +13,7 @@ const genDiff = (filepath1, filepath2, format = 'stylish') => {
 
   const keysData = compareObjects(object1, object2);
 
-  return formatData(keysData, format);
+  return formatData(keysData, formatName);
 };
 
 export default genDiff;

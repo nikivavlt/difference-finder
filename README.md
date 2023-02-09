@@ -2,8 +2,8 @@
 Difference finder - package compares two configuration files (.json, .yml, .ini extensions) and shows a difference.
 
 ### Usage example:
+Comparing two .json files:
 [![asciicast](https://asciinema.org/a/qaFxqdAN2QM386mkZ8k01lhGT.svg)](https://asciinema.org/a/qaFxqdAN2QM386mkZ8k01lhGT)
-
 
 ### Hexlet tests and linter status:
 [![Actions Status](https://github.com/nikivavlt/frontend-project-46/workflows/hexlet-check/badge.svg)](https://github.com/nikivavlt/frontend-project-46/actions)
