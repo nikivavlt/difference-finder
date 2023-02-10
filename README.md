@@ -1,16 +1,17 @@
 ### Description:
 Difference finder - package compares two configuration files (.json, .yml) and shows the difference.
+
 Finder outputs the result in the terminal in three possible formats:
 "stylish": tree structure
 "plain": plain text
 "json": json string
 ___
 ### Usage examples:
-Comparing two .json files:
-[![asciicast](https://asciinema.org/a/TUraqf9RDY6Ugfia1poqXFQN9.svg)](https://asciinema.org/a/TUraqf9RDY6Ugfia1poqXFQN9)
+##### Comparing two .json files:
+> [![asciicast](https://asciinema.org/a/TUraqf9RDY6Ugfia1poqXFQN9.svg)](https://asciinema.org/a/TUraqf9RDY6Ugfia1poqXFQN9)
 
-Comparing two .yml files:
-[![asciicast](https://asciinema.org/a/v99v7wjlP0QwId2JaHQgY75Ak.svg)](https://asciinema.org/a/v99v7wjlP0QwId2JaHQgY75Ak)
+##### Comparing two .yml files:
+> [![asciicast](https://asciinema.org/a/v99v7wjlP0QwId2JaHQgY75Ak.svg)](https://asciinema.org/a/v99v7wjlP0QwId2JaHQgY75Ak)
 ___
 ### Hexlet tests and linter status:
 [![Actions Status](https://github.com/nikivavlt/frontend-project-46/workflows/hexlet-check/badge.svg)](https://github.com/nikivavlt/frontend-project-46/actions)
