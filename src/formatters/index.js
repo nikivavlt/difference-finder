@@ -1,4 +1,3 @@
-/* eslint-disable import/extensions */
 import stringify from './stylish.js';
 import createPlainString from './plain.js';
 

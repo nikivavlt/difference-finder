@@ -1,8 +1,7 @@
-/* eslint-disable import/extensions */
 import { readFile, getExtension } from './tools.js';
 import parse from './parsers.js';
 import compareObjects from './compare.js';
-import formatData from './formatters/format.js';
+import formatData from './formatters/index.js';
 
 const genDiff = (filepath1, filepath2, formatName = 'stylish') => {
   const file1 = readFile(filepath1);
