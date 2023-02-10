@@ -2,9 +2,9 @@
 Difference finder - package compares two configuration files (.json, .yml) and shows the difference.
 
 Finder outputs the result in the terminal in three possible formats:
-"stylish": tree structure
-"plain": plain text
-"json": json string
+- "stylish": tree structure
+- "plain": plain text
+- "json": json string
 ___
 ### Usage examples:
 ##### Comparing two .json files:
