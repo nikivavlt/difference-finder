@@ -1,32 +1,33 @@
-const isObject = (data) => (typeof data === 'object' && data !== null);
+import { isObject } from '../tools.js';
 
-const stringifyValue = (value) => {
-  if (isObject(value)) {
-    return '[complex value]';
-  }
-  if (typeof value === 'string') {
-    return `'${value}'`;
-  }
-  return value;
+const getValue = (objectValue) => {
+  if (isObject(objectValue)) return '[complex value]';
+
+  if (typeof objectValue === 'string') return `'${objectValue}'`;
+
+  return objectValue;
 };
 
-export default (data) => {
-  const iter = (tree, parentName) => tree.flatMap((node) => {
-    const fullName = parentName === '' ? node.name : `${parentName}.${node.name}`;
-    switch (node.type) {
-      case 'added':
-        return `Property '${fullName}' was added with value: ${stringifyValue(node.value)}`;
-      case 'deleted':
-        return `Property '${fullName}' was removed`;
-      case 'changed':
-        return `Property '${fullName}' was updated. From ${stringifyValue(node.oldValue)} to ${stringifyValue(node.newValue)}`;
+const createPlainString = (data, parentName = '') => data
+  .flatMap((element) => {
+    const fullName = (parentName === '') ? element.name : `${parentName}.${element.name}`;
+
+    switch (element.type) {
       case 'nested':
-        return iter(node.value, fullName);
+        return createPlainString(element.value, fullName);
       case 'unchanged':
         return null;
+      case 'deleted':
+        return `${fullName} was removed`;
+      case 'added':
+        return `${fullName} was added with value: ${getValue(element.value)}`;
+      case 'changed':
+        return `${fullName} was updated. From ${getValue(element.oldValue)} to ${getValue(element.newValue)}`;
       default:
-        throw new Error(`Unknown node type: ${node.type}`);
+        throw new Error(`Unknown element type: ${element.type}`);
     }
-  });
-  return iter(data, '').filter((element) => element !== null).join('\n');
-};
+  })
+  .filter((element) => element !== null)
+  .join('\n');
+
+export default createPlainString;

@@ -1,11 +1,11 @@
+import { isObject } from '../tools.js';
+
 const openBracket = '{';
 const closeBracket = '}';
 const spacer = ' ';
 
-const isNotObject = (data) => (typeof data !== 'object' || data === null);
-
 const createString = (value, depth) => {
-  if (isNotObject(value)) return value;
+  if (!isObject(value)) return value;
 
   const string = Object
     .entries(value)
