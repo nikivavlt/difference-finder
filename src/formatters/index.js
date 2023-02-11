@@ -1,11 +1,10 @@
-import stringify from './stylish.js';
-import createPlainString from './plain.js';
-import createJSON from './json.js';
+import formatStylish from './stylish.js';
+import formatPlain from './plain.js';
 
 const fileFormats = {
-  stylish: stringify,
-  plain: createPlainString,
-  json: createJSON,
+  stylish: formatStylish,
+  plain: formatPlain,
+  json: JSON.stringify,
 };
 
 export default (data, format) => fileFormats[format](data);

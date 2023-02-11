@@ -2,60 +2,48 @@ import { isObject } from '../tools.js';
 
 const openBracket = '{';
 const closeBracket = '}';
-const spacer = ' ';
+const spacer = '  ';
+const markers = {
+  added: '+',
+  deleted: '-',
+  unchanged: ' ',
+};
 
 const createString = (value, depth) => {
   if (!isObject(value)) return value;
 
   const string = Object
     .entries(value)
-    .map(([key, val]) => `${spacer.repeat(depth + 2)}  ${key}: ${createString(val, depth + 4)}`);
+    .map(([key, val]) => `${spacer.repeat(depth)}  ${key}: ${createString(val, depth + 2)}`);
 
   return [
     openBracket,
     ...string,
-    `${spacer.repeat(depth)}${closeBracket}`,
+    `${spacer.repeat(depth - 1)}${closeBracket}`,
   ].join('\n');
 };
 
-const stringify = (data) => {
-  const makeString = (currentData, depth) => currentData.flatMap((element) => {
-    const {
-      name,
-      value,
-      type,
-      oldValue,
-      newValue,
-    } = element;
-
-    const typeSymbol = {
-      added: '+',
-      deleted: '-',
-      unchanged: ' ',
-    };
-
-    switch (type) {
+const formatStylish = (data, depth) => data
+  .flatMap((element) => {
+    switch (element.type) {
       case 'added':
       case 'deleted':
       case 'unchanged':
-        return `${spacer.repeat(depth)}${typeSymbol[type]} ${name}: ${createString(value, depth + 2)}`;
+        return `${spacer.repeat(depth)}${markers[element.type]} ${element.name}: ${createString(element.value, depth + 2)}`;
       case 'changed':
         return [
-          `${spacer.repeat(depth)}${typeSymbol.deleted} ${name}: ${createString(oldValue, depth + 2)}`,
-          `${spacer.repeat(depth)}${typeSymbol.added} ${name}: ${createString(newValue, depth + 2)}`,
+          `${spacer.repeat(depth)}${markers.deleted} ${element.name}: ${createString(element.oldValue, depth + 2)}`,
+          `${spacer.repeat(depth)}${markers.added} ${element.name}: ${createString(element.newValue, depth + 2)}`,
         ];
       case 'nested':
         return [
-          `${spacer.repeat(depth)}  ${name}: ${openBracket}`,
-          ...makeString(value, depth + 4),
-          `${spacer.repeat(depth + 2)}${closeBracket}`,
+          `${spacer.repeat(depth)}  ${element.name}: ${openBracket}`,
+          ...formatStylish(element.value, depth + 2),
+          `${spacer.repeat(depth + 1)}${closeBracket}`,
         ];
       default:
-        break;
+        throw new Error(`Unknown element type: ${element.type}`);
     }
   });
 
-  return [openBracket, ...makeString(data, 2), closeBracket].join('\n');
-};
-
-export default stringify;
+export default (data) => [openBracket, ...formatStylish(data, 1), closeBracket].join('\n');

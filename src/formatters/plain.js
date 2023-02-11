@@ -8,13 +8,13 @@ const getValue = (objectValue) => {
   return objectValue;
 };
 
-const createPlainString = (data, parentName = '') => data
+const formatPlain = (data, parentName = '') => data
   .flatMap((element) => {
     const fullName = (parentName === '') ? element.name : `${parentName}.${element.name}`;
 
     switch (element.type) {
       case 'nested':
-        return createPlainString(element.value, fullName);
+        return formatPlain(element.value, fullName);
       case 'unchanged':
         return null;
       case 'deleted':
@@ -30,4 +30,4 @@ const createPlainString = (data, parentName = '') => data
   .filter((element) => element !== null)
   .join('\n');
 
-export default createPlainString;
+export default formatPlain;

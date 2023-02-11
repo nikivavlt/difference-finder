@@ -1,7 +1,7 @@
 import { fileURLToPath } from 'url';
 import path from 'path';
-import genDiff from '../src/index';
-import { readFile } from '../src/tools';
+import genDiff from '../src/index.js';
+import { readFile } from '../src/tools.js';
 
 const filename = fileURLToPath(import.meta.url);
 const dirname = path.dirname(filename);
