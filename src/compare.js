@@ -1,4 +1,5 @@
 /* eslint-disable padded-blocks */
+import _ from 'lodash';
 import { isObject } from './tools.js';
 
 const isContainsKey = (object, key) => Object.prototype.hasOwnProperty.call(object, key);
@@ -9,8 +10,7 @@ const compareObjects = (object1, object2) => {
     ...Object.keys(object2),
   ]);
 
-  return [...keys]
-    .sort()
+  return _.sortBy([...keys])
     .map((key) => {
       if (!isContainsKey(object1, key)) return { name: key, value: object2[key], type: 'added' };
 
