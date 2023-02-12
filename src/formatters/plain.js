@@ -18,11 +18,11 @@ const formatPlain = (data, parentName = '') => data
       case 'unchanged':
         return null;
       case 'deleted':
-        return `${fullName} was removed`;
+        return `Property '${fullName}' was removed`;
       case 'added':
-        return `${fullName} was added with value: ${getValue(element.value)}`;
+        return `Property '${fullName}' was added with value: ${getValue(element.value)}`;
       case 'changed':
-        return `${fullName} was updated. From ${getValue(element.oldValue)} to ${getValue(element.newValue)}`;
+        return `Property '${fullName}' was updated. From ${getValue(element.oldValue)} to ${getValue(element.newValue)}`;
       default:
         throw new Error(`Unknown element type: ${element.type}`);
     }
