@@ -1,5 +1,5 @@
 ### Description:
-Difference finder - package compares two configuration files (.json, .yml) and shows the difference.
+Difference finder - package compares two configuration files (.json, .yml extensions) and shows the difference.
 
 Finder outputs the result in the terminal in three possible formats:
 - "stylish": tree structure

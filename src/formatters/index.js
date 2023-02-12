@@ -1,10 +1,15 @@
 import formatStylish from './stylish.js';
 import formatPlain from './plain.js';
 
-const fileFormats = {
-  stylish: formatStylish,
-  plain: formatPlain,
-  json: JSON.stringify,
+export default (data, formatName) => {
+  switch (formatName) {
+    case 'stylish':
+      return formatStylish(data);
+    case 'plain':
+      return formatPlain(data);
+    case 'json':
+      return JSON.stringify(data);
+    default:
+      throw new Error(`Unknown format name: ${formatName}`);
+  }
 };
-
-export default (data, format) => fileFormats[format](data);
